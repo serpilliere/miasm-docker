@@ -19,7 +19,7 @@ MAINTAINER Camille Mougey <commial@gmail.com>
 
 # Download needed packages
 RUN apt-get -qq update && \
-    apt-get -qqy install python2.7 git make gcc libpython2.7-dev python-pyparsing python-llvm
+    apt-get -qqy install python2.7 git make gcc libpython2.7-dev python-pyparsing python-llvm unzip
 
 # TCC
 RUN cd /opt && \
@@ -41,16 +41,16 @@ RUN cd /opt && \
     rm -rf /opt/elfesteem.tar.gz
 
 # Get miasm2
-ADD https://miasm.googlecode.com/archive/tip.tar.gz /opt/miasm2.tar.gz
+ADD https://github.com/serpilliere/miasm/archive/master.zip /opt/miasm-master.zip
 RUN cd /opt && \
-    tar xzf miasm2.tar.gz && \
-    mv miasm-tip miasm2 && \
+    unzip miasm-master.zip && \
+    mv miasm-master miasm2 && \
     cd miasm2 && \
     python setup.py install && \
-    rm -rf /opt/miasm2.tar.gz
+    rm -rf /opt/miasm-master.zip
 
 # Clean
-RUN apt-get -qq remove --purge make git && \
+RUN apt-get -qq remove --purge make git unzip && \
     apt-get -qq autoremove --purge && \
     apt-get -qq clean
 
