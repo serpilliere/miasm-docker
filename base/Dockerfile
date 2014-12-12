@@ -41,7 +41,7 @@ RUN cd /opt && \
     rm -rf /opt/elfesteem.tar.gz
 
 # Get miasm2
-ADD https://github.com/serpilliere/miasm/archive/master.zip /opt/miasm-master.zip
+ADD https://github.com/cea-sec/miasm/archive/master.zip /opt/miasm-master.zip
 RUN cd /opt && \
     unzip miasm-master.zip && \
     mv miasm-master miasm2 && \
