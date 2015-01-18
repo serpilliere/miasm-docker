@@ -25,8 +25,7 @@ RUN apt-get -qq update && \
 RUN cd /opt && \
     git clone http://repo.or.cz/tinycc.git tinycc && \
     cd tinycc && \
-    sed --in-place "s/CFLAGS+=-fno-strict-aliasing/CFLAGS+=-fno-strict-aliasing -fPIC/g" Makefile && \
-    ./configure && \
+    ./configure --disable-static && \
     make && \
     make install && \
     make clean
