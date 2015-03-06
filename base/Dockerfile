@@ -21,10 +21,11 @@ MAINTAINER Camille Mougey <commial@gmail.com>
 RUN apt-get -qq update && \
     apt-get -qqy install python2.7 git make gcc libpython2.7-dev python-pyparsing python-llvm unzip
 
-# TCC
+# TCC release 0.9.26
 RUN cd /opt && \
     git clone http://repo.or.cz/tinycc.git tinycc && \
     cd tinycc && \
+    git checkout d5e22108a0dc48899e44a158f91d5b3215eb7fe6 && \
     ./configure --disable-static && \
     make && \
     make install && \
