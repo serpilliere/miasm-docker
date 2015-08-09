@@ -19,7 +19,7 @@ MAINTAINER Camille Mougey <commial@gmail.com>
 
 # Download needed packages
 RUN apt-get -qq update && \
-    apt-get -qqy install python2.7 git make gcc libpython2.7-dev python-pyparsing python-llvm unzip
+    apt-get -qqy install python2.7 git make gcc g++ libpython2.7-dev python-pyparsing python-llvm unzip
 
 # TCC release 0.9.26
 RUN cd /opt && \
@@ -32,13 +32,13 @@ RUN cd /opt && \
     make clean
 
 # Elfesteem
-ADD https://elfesteem.googlecode.com/archive/tip.tar.gz /opt/elfesteem.tar.gz
+ADD https://github.com/serpilliere/elfesteem/archive/master.zip /opt/elfesteem.zip
 RUN cd /opt && \
-    tar xzf elfesteem.tar.gz && \
-    mv elfesteem-tip elfesteem && \
+    unzip elfesteem.zip && \
+    mv elfesteem-master elfesteem && \
     cd elfesteem && \
     python setup.py install && \
-    rm -rf /opt/elfesteem.tar.gz
+    rm -rf /opt/elfesteem.zip
 
 # Get miasm2
 ADD https://github.com/cea-sec/miasm/archive/master.zip /opt/miasm-master.zip
@@ -48,6 +48,13 @@ RUN cd /opt && \
     cd miasm2 && \
     python setup.py install && \
     rm -rf /opt/miasm-master.zip
+
+# Get z3
+ADD http://download-codeplex.sec.s-msft.com/Download/SourceControlFileDownload.ashx?ProjectName=z3&changeSetId=cee7dd39444c9060186df79c2a2c7f8845de415b /opt/z3.zip
+RUN cd /opt && \
+    mkdir z3 && cd z3 && \
+    unzip -q ../z3.zip && python scripts/mk_make.py && cd build && make -j 4 && make install && \
+    rm /opt/z3.zip
 
 # Clean
 RUN apt-get -qq remove --purge make git unzip && \
