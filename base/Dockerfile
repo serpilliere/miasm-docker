@@ -32,13 +32,13 @@ RUN cd /opt && \
     make clean
 
 # Elfesteem
-ADD https://elfesteem.googlecode.com/archive/tip.tar.gz /opt/elfesteem.tar.gz
+ADD https://github.com/serpilliere/elfesteem/archive/master.zip /opt/elfesteem.zip
 RUN cd /opt && \
-    tar xzf elfesteem.tar.gz && \
-    mv elfesteem-tip elfesteem && \
+    unzip elfesteem.zip && \
+    mv elfesteem-master elfesteem && \
     cd elfesteem && \
     python setup.py install && \
-    rm -rf /opt/elfesteem.tar.gz
+    rm -rf /opt/elfesteem.zip
 
 # Get miasm2
 ADD https://github.com/cea-sec/miasm/archive/master.zip /opt/miasm-master.zip
