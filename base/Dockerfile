@@ -50,11 +50,13 @@ RUN cd /opt && \
     rm -rf /opt/miasm-master.zip
 
 # Get z3
-ADD http://download-codeplex.sec.s-msft.com/Download/SourceControlFileDownload.ashx?ProjectName=z3&changeSetId=cee7dd39444c9060186df79c2a2c7f8845de415b /opt/z3.zip
 RUN cd /opt && \
-    mkdir z3 && cd z3 && \
-    unzip -q ../z3.zip && python scripts/mk_make.py && cd build && make -j 4 && make install && \
-    rm /opt/z3.zip
+    git clone https://github.com/Z3Prover/z3 z3 && \
+    cd z3 && \
+    python scripts/mk_make.py --python && \
+    cd build && \
+    make && \
+    make install
 
 # Clean
 RUN apt-get -qq remove --purge make git unzip && \
